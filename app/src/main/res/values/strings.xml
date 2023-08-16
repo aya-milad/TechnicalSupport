@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">الدعم الفني</string>
+    <string name="employeeNumber">رقم الموظف</string>
+    <string name="password">كلمة المرور</string>
+    <string name="rememberMe">تذكرني</string>
+    <string name="login">دخول</string>
+    <string name="tittle">عنوان المشكلة</string>
+    <string name="decoration">وصف المشكلة</string>
+    <string name="problemperson">صاحب المشكلة</string>
+    <string name="location">عنوان المكتب</string>
+    <string name="Submit">ارسال الطلب</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="show_details">تفاصيل الجهاز</string>
+    <string name="sendRequest">تقديم طلب</string>
+    <string name="myRequests">طلباتي</string>
+</resources>
