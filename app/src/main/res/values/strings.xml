@@ -14,4 +14,8 @@
     <string name="show_details">تفاصيل الجهاز</string>
     <string name="sendRequest">تقديم طلب</string>
     <string name="myRequests">طلباتي</string>
+    <string name="followRequests">متابعة الطلبات </string>
+    <string name="viewRequests">عرض الطلبات</string>
+    <string name="accepted">قبول</string>
+    <string name="Determine_duration"> مدة الصيانة</string>
 </resources>
