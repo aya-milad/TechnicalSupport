@@ -123,14 +123,7 @@
 
             android:layout_marginTop="@dimen/_10sdp">
 
-            <TextView
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="match_parent"
-                android:textSize="@dimen/_15ssp"
-                android:text="ادراج مرفقات"
-                android:gravity="center"
 
-                />
 
             <ImageView
                 android:id="@+id/imgJobs"
@@ -146,7 +139,14 @@
 
                 android:background="@drawable/shape_camera"
                 />
+            <TextView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/_15ssp"
+                android:text="ادراج مرفقات"
+                android:gravity="center"
 
+                />
 
         </LinearLayout>
         <androidx.appcompat.widget.AppCompatButton

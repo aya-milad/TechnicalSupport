@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">الدعم الفني</string>
-    <string name="employeeNumber">رقم الموظف</string>
+    <string name="employeeEmail">البريد الالكتروني</string>
     <string name="password">كلمة المرور</string>
     <string name="rememberMe">تذكرني</string>
     <string name="login">دخول</string>

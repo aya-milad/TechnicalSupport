@@ -30,7 +30,6 @@ public class MyRequestsActivity extends AppCompatActivity {
         tb.add("جاري الصيانة");
         fragments=new ArrayList<>();
         fragments.add(new DoneFragment());
-
         fragments.add(new InProgressFragment());
         MyRequestsAdapter adapter=new MyRequestsAdapter(MyRequestsActivity.this,fragments);
         binding.VP.setAdapter(adapter);

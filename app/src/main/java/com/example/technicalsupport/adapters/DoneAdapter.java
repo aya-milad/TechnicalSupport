@@ -8,8 +8,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.technicalsupport.databinding.CustomDonItemBinding;
+import com.example.technicalsupport.javaClasses.Request;
+
+import java.util.ArrayList;
 
 public class DoneAdapter extends RecyclerView.Adapter<DoneAdapter.DoneHolder> {
+    private ArrayList<Request>requestArrayList;
+
+    public DoneAdapter(ArrayList<Request> requestArrayList) {
+        this.requestArrayList = requestArrayList;
+    }
+
     @NonNull
     @Override
     public DoneHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -19,12 +28,14 @@ public class DoneAdapter extends RecyclerView.Adapter<DoneAdapter.DoneHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull DoneHolder holder, int position) {
+int poss =position;
+Request request=requestArrayList.get(poss);
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return requestArrayList.size();
     }
 
     class DoneHolder extends RecyclerView.ViewHolder {
