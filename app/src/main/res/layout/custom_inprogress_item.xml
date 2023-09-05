@@ -1,54 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginHorizontal="@dimen/_16sdp"
-    app:cardCornerRadius="@dimen/_16sdp"
-    android:layout_marginTop="@dimen/_16sdp">
+    android:layout_marginTop="@dimen/_16sdp"
+    app:cardCornerRadius="@dimen/_16sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/blue"
-        >
+        android:layout_height="match_parent"
 
+        >
 
 
         <TextView
             android:id="@+id/titleTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/_50sdp"
             android:layout_marginTop="@dimen/_24sdp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="@dimen/_50sdp"
+            android:textColor="@color/black"
             android:textSize="@dimen/_20ssp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/timer"
-            android:layout_width="6dp"
+            android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:layout_marginTop="@dimen/_24sdp"
             android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_24sdp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/deatilsJobBtn"
+            android:id="@+id/deatilsDeviceBtn"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/titleTV"
-app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="@dimen/_30sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
             android:background="@drawable/background_show_details"
-            android:text="@string/show_details"/>
+            android:text="@string/show_details"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleTV" />
 
-
-
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/deliveryDeviceBtn"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:background="@drawable/background_show_details"
+            android:text="@string/deliveryDevice"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleTV" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

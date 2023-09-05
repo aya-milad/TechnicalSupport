@@ -18,4 +18,5 @@
     <string name="viewRequests">عرض الطلبات</string>
     <string name="accepted">قبول</string>
     <string name="Determine_duration"> مدة الصيانة</string>
+    <string name="deliveryDevice">تسليم الجهاز</string>
 </resources>

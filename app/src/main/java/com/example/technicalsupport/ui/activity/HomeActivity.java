@@ -1,6 +1,6 @@
 package com.example.technicalsupport.ui.activity;
 
-import static com.example.technicalsupport.javaClasses.Constant.COLLECTION_USER;
+import static com.example.technicalsupport.model.javaClasses.Constant.COLLECTION_USER;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,11 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.technicalsupport.R;
 import com.example.technicalsupport.databinding.ActivityHomeBinding;
-import com.example.technicalsupport.databinding.ActivityMyRequestsBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +34,19 @@ ActivityHomeBinding binding;
         fireStore =FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser=firebaseAuth.getCurrentUser();
+        binding.logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firebaseAuth.signOut();
+                finish();
+            }
+        });
+        binding.profileImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeActivity.this,ProfileActivity.class));
+            }
+        });
         Log.d("TAG", "onCreate: "+currentUser.getEmail());
         fireStore.collection(COLLECTION_USER).get()
         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -77,4 +87,7 @@ binding.myRequestLout.setOnClickListener(new View.OnClickListener() {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+    }
 }

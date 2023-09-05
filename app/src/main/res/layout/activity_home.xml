@@ -47,12 +47,12 @@
 
 
     <ImageView
-        android:id="@+id/not_icon"
+        android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginStart="@dimen/_16sdp"
-        android:src="@drawable/ic_notification"
+        android:src="@drawable/ic_logout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

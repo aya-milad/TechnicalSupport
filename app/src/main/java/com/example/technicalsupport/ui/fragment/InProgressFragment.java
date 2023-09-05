@@ -1,8 +1,11 @@
 package com.example.technicalsupport.ui.fragment;
 
-import static com.example.technicalsupport.javaClasses.Constant.COLLECTION_ON_PROGRESS;
-import static com.example.technicalsupport.javaClasses.Constant.COLLECTION_ORDER_DATA;
+import static com.example.technicalsupport.model.javaClasses.Constant.COLLECTION_ON_PENDING;
+import static com.example.technicalsupport.model.javaClasses.Constant.COLLECTION_ON_PROGRESS;
+import static com.example.technicalsupport.model.javaClasses.Constant.COLLECTION_ORDER_DATA;
+import static com.example.technicalsupport.model.javaClasses.Constant.COLLECTION_USER;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,12 +20,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.technicalsupport.OnClickItemDetailsRequest;
-import com.example.technicalsupport.R;
+import com.example.technicalsupport.model.interfaceClass.OnClickItemDetailsRequest;
 import com.example.technicalsupport.adapters.InProgressAdapter;
 import com.example.technicalsupport.databinding.FragmentInProgressBinding;
-import com.example.technicalsupport.javaClasses.Request;
+import com.example.technicalsupport.model.interfaceClass.SendData;
+import com.example.technicalsupport.model.javaClasses.Request;
 import com.example.technicalsupport.ui.activity.DetailsActivity;
+import com.example.technicalsupport.ui.activity.HomeActivity;
+import com.example.technicalsupport.ui.activity.HomeSupportActivity;
+import com.example.technicalsupport.ui.activity.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,6 +57,10 @@ public class InProgressFragment extends Fragment implements OnClickItemDetailsRe
     private FirebaseUser currentUser;
     private FirebaseAuth firebaseAuth;
     private InProgressAdapter inProgressAdapter;
+    private String documentId;
+
+
+    SendData sendData;
 
 
     // TODO: Rename and change types of parameters
@@ -60,6 +70,7 @@ public class InProgressFragment extends Fragment implements OnClickItemDetailsRe
     public InProgressFragment() {
         // Required empty public constructor
     }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -96,60 +107,99 @@ public class InProgressFragment extends Fragment implements OnClickItemDetailsRe
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser=firebaseAuth.getCurrentUser();
         binding.progressBar.setVisibility(View.VISIBLE);
-        Toast.makeText(getActivity(), "mmmmmmmmmmmmmmmm", Toast.LENGTH_SHORT).show();
         getAllOrders();
         Log.d("TAG", "onSuccess: " +currentUser.getUid());
 
         return binding.getRoot();
     }
     private  void  getAllOrders() {
-      ArrayList<Request>  requestArrayList = new ArrayList<>();
-        fireStore.collection(COLLECTION_ORDER_DATA)
-                .document(currentUser.getUid())
-                .collection(COLLECTION_ON_PROGRESS)
-                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        binding.progressBar.setVisibility(View.GONE);
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            if (documentSnapshot.exists()) {
-                                String  tittle = documentSnapshot.getString("tittle");
-                                String description = documentSnapshot.getString("description");
-                                String location = documentSnapshot.getString("location");
-                                String   person = documentSnapshot.getString("personName");
-                                String deviceImage = documentSnapshot.getString("deviceImg");
-                                Request request = new Request(tittle,description,location,person,deviceImage);
-                                requestArrayList.add(request);
-                                Log.d("TAG", "onSuccess: "+requestArrayList.size());
-                                if (inProgressAdapter == null) {
-                                    inProgressAdapter = new InProgressAdapter(requestArrayList,InProgressFragment.this);
-                                    Log.d("TAG", "onSuccess: "+inProgressAdapter.getItemCount());
+        fireStore.collection(COLLECTION_USER)
+                .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                    documentId = documentSnapshot.getId();
+                                    binding.progressBar.setVisibility(View.VISIBLE);
 
-                                    binding.rv.setAdapter(inProgressAdapter);
-                                    binding.rv.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-                                } else {
-                                    inProgressAdapter.notifyDataSetChanged();
+                                    requestArrayList = new ArrayList<>();
+                                    fireStore.collection(COLLECTION_ORDER_DATA)
+                                            .document(currentUser.getUid())
+                                            .collection(COLLECTION_ON_PROGRESS)
+                                            .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                    binding.progressBar.setVisibility(View.GONE);
+                                                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                                        if (documentSnapshot.exists()) {
+                                                            String  tittle = documentSnapshot.getString("tittle");
+
+                                                            String time = documentSnapshot.getString("time");
+                                                            String id = documentSnapshot.getString("id");
+                                                            Request request = new Request(id,tittle,time);
+                                                            requestArrayList.add(request);
+                                                            Log.d("TAG", "onSuccess: "+requestArrayList.size());
+                                                            Log.d("TAG", "onSuccess: "+tittle);
+                                                            if (inProgressAdapter == null) {
+                                                                inProgressAdapter = new InProgressAdapter(requestArrayList,InProgressFragment.this);
+                                                                Log.d("TAG", "onSuccess: "+inProgressAdapter.getItemCount());
+
+                                                                binding.rv.setAdapter(inProgressAdapter);
+                                                                binding.rv.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+                                                            } else {
+                                                                inProgressAdapter.notifyDataSetChanged();
+                                                            }
+
+
+
+                                                        } else   {
+                                                            Log.d("TAG", "onSuccess: "+ "non exists");
+                                                        }
+
+
+                                                    }
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(getActivity(), e.getMessage(), Toast .LENGTH_SHORT).show();
+                                                }
+                                            });
                                 }
-
-
-
-                            } else   {
-                                Log.d("TAG", "onSuccess: "+ "non exists");
                             }
+                        });
 
 
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), e.getMessage(), Toast .LENGTH_SHORT).show();
-                    }
-                });
     }
+
 
     @Override
     public void showDetails(int position) {
-        startActivity(new Intent(getActivity(), DetailsActivity.class));
+        Request request= requestArrayList.get(position);
+//        sendData.setData(currentUser.getUid(),request.getId());
+//        getActivity().startActivity(new Intent(getActivity(), DetailsActivity.class));
+        Intent intent=new Intent(getActivity(), DetailsActivity.class);
+        intent.putExtra("documentId",currentUser.getUid());
+        intent.putExtra("id",request.getId());
+        intent.putExtra("from","inProgress");
+        intent.putExtra("fromInProgress","true");
+
+
+        startActivity(intent);
+
+    }
+
+    @Override
+    public void deliveryDevice(int position) {
+        Request request= requestArrayList.get(position);
+
+        DeliveryDeviceFragment fragment=DeliveryDeviceFragment.newInstance(documentId,request.getId());
+        fragment.show(getActivity().getSupportFragmentManager(),"");
+
+    }
+
+    @Override
+    public void deniedRequest(int position) {
+
     }
 }

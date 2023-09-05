@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "572529820957",
-    "project_id": "technical-support-18633",
-    "storage_bucket": "technical-support-18633.appspot.com"
+    "project_number": "803118826002",
+    "project_id": "technical-support-e8963",
+    "storage_bucket": "technical-support-e8963.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:572529820957:android:ebb04992975fbd406f0df4",
+        "mobilesdk_app_id": "1:803118826002:android:0942c688c88aff9abd8ecb",
         "android_client_info": {
           "package_name": "com.example.technicalsupport"
         }
       },
       "oauth_client": [
         {
-          "client_id": "572529820957-307e4g10uumaf451t7mr90isegroilmi.apps.googleusercontent.com",
+          "client_id": "803118826002-u1atgb7aep7bt67r4mfb142niep70md6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAGmRjLQlbcVR3bzYf-dJHP7spTT8ARZOE"
+          "current_key": "AIzaSyDiKfMFRwmCh-U663AFDrTF55kN07yUI2A"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "572529820957-307e4g10uumaf451t7mr90isegroilmi.apps.googleusercontent.com",
+              "client_id": "803118826002-u1atgb7aep7bt67r4mfb142niep70md6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

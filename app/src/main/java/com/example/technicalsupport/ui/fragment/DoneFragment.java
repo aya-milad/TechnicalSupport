@@ -1,8 +1,9 @@
 package com.example.technicalsupport.ui.fragment;
 
-import static com.example.technicalsupport.javaClasses.Constant.COLLECTION_Done_Job;
-import static com.example.technicalsupport.javaClasses.Constant.COLLECTION_ON_PROGRESS;
-import static com.example.technicalsupport.javaClasses.Constant.COLLECTION_ORDER_DATA;
+import static com.example.technicalsupport.model.javaClasses.Constant.COLLECTION_ON_DONE;
+import static com.example.technicalsupport.model.javaClasses.Constant.COLLECTION_ON_PROGRESS;
+import static com.example.technicalsupport.model.javaClasses.Constant.COLLECTION_ORDER_DATA;
+import static com.example.technicalsupport.model.javaClasses.Constant.COLLECTION_USER;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,11 +19,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.technicalsupport.R;
 import com.example.technicalsupport.adapters.DoneAdapter;
 import com.example.technicalsupport.adapters.InProgressAdapter;
+import com.example.technicalsupport.adapters.InProgressSupportAdapter;
 import com.example.technicalsupport.databinding.FragmentDoneBinding;
-import com.example.technicalsupport.javaClasses.Request;
+import com.example.technicalsupport.model.interfaceClass.OnClickItemDetailsRequest;
+import com.example.technicalsupport.model.javaClasses.Request;
 import com.example.technicalsupport.ui.activity.DetailsActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,6 +53,7 @@ public class DoneFragment extends Fragment {
     private FirebaseUser currentUser;
     private FirebaseAuth firebaseAuth;
     private DoneAdapter doneAdapter;
+    private String documentId;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -91,7 +94,7 @@ public class DoneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        FragmentDoneBinding binding =FragmentDoneBinding.inflate(inflater,container,false);
+         binding =FragmentDoneBinding.inflate(inflater,container,false);
         fireStore=FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser=firebaseAuth.getCurrentUser();
@@ -99,48 +102,68 @@ public class DoneFragment extends Fragment {
         return  binding.getRoot();
     }
     private  void  getAllDoneOrders() {
-//        binding.progressBar.setVisibility(View.VISIBLE);
-        requestArrayList = new ArrayList<>();
-        fireStore.collection(COLLECTION_ORDER_DATA)
-                .document(currentUser.getUid())
-                .collection(COLLECTION_Done_Job)
-                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        fireStore.collection(COLLECTION_USER)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                       // binding.progressBar.setVisibility(View.GONE);
                         for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            if (documentSnapshot.exists()) {
-                                String  tittle = documentSnapshot.getString("tittle");
-                                String description = documentSnapshot.getString("description");
-                                String location = documentSnapshot.getString("location");
-                                String   person = documentSnapshot.getString("personName");
-                                String deviceImage = documentSnapshot.getString("deviceImg");
-                                Request request = new Request(tittle,description,location,person,deviceImage);
-                                requestArrayList.add(request);
-                                if (doneAdapter == null) {
-                                    doneAdapter = new DoneAdapter(requestArrayList);
-                                    binding.rv.setAdapter(doneAdapter);
-                                    binding.rv.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-                                } else {
-                                    doneAdapter.notifyDataSetChanged();
-                                }
+                            documentId = documentSnapshot.getId();
+                            String typeUser=documentSnapshot.getString("isTechnicalSupportEmployee");
+
+                           binding.progressBar.setVisibility(View.VISIBLE);
+
+
+                            requestArrayList = new ArrayList<>();
+                            fireStore.collection(COLLECTION_ORDER_DATA)
+                                    .document(documentId)
+                                    .collection(COLLECTION_ON_DONE)
+                                    .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                            binding.progressBar.setVisibility(View.GONE);
+                                            for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                                if (documentSnapshot.exists()) {
+                                                    String  tittle = documentSnapshot.getString("tittle");
+                                                    String time = documentSnapshot.getString("time");
+                                                    String id = documentSnapshot.getString("id");
+                                                    Request request = new Request(id,tittle,time);
+                                                    requestArrayList.add(request);
+                                                    Log.d("TAG", "onSuccess: "+requestArrayList.size());
+                                                    Log.d("TAG", "onSuccess: "+tittle);
+                                                    if (doneAdapter == null) {
+                                                        doneAdapter = new DoneAdapter(requestArrayList);
+                                                        Log.d("TAG", "onSuccess: "+doneAdapter.getItemCount());
+
+                                                        binding.rv.setAdapter(doneAdapter);
+                                                        binding.rv.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+                                                    } else {
+                                                        doneAdapter.notifyDataSetChanged();
+                                                    }
 
 
 
-                            } else   {
-                                Log.d("TAG", "onSuccess: "+ "non exists");
-                            }
+                                                } else   {
+                                                    Log.d("TAG", "onSuccess: "+ "non exists");
+                                                }
 
 
+                                            }
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getActivity(), e.getMessage(), Toast .LENGTH_SHORT).show();
+                                        }
+                                    });
                         }
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), e.getMessage(), Toast .LENGTH_SHORT).show();
-                    }
                 });
+
+
+
     }
+
 
 
 }

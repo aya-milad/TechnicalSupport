@@ -24,20 +24,26 @@
             app:layout_constraintRight_toRightOf="parent"
             android:textSize="@dimen/_20ssp"
             android:textStyle="bold" />
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/deatilsJobBtn"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="wrap_content"
+        <View
+            android:layout_width="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/titleTV"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="@dimen/_30sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:background="@drawable/background_show_details"
-            android:text="@string/show_details"/>
+            android:layout_height="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:id="@+id/deatilsDeviceBtn"-->
+<!--            android:layout_width="@dimen/_100sdp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/titleTV"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            android:layout_marginRight="@dimen/_30sdp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            android:layout_marginBottom="@dimen/_20sdp"-->
+<!--            android:layout_marginTop="@dimen/_20sdp"-->
+<!--            android:background="@drawable/background_show_details"-->
+<!--            android:text="@string/show_details"/>-->
 
 
 

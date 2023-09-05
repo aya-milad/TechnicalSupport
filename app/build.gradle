@@ -47,14 +47,21 @@ dependencies {
     implementation 'com.mikhaellopez:circularimageview:4.3.1'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 //material
-   // implementation 'com.google.android.material:material:1.5.0'
     implementation 'com.google.android.material:material:1.9.0'
     //Firebase
     implementation platform('com.google.firebase:firebase-bom:32.0.0')
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-storage'
+    //FCM
+    implementation 'com.google.firebase:firebase-messaging:23.1.0'
+    //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+////Coroutines
+//    implementation 'or.jebrain.kotlinx:kotlin-coroutines-core:1.3.5'
+//    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
+
 
 
 
